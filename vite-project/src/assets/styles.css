@@ -1,0 +1,35 @@
+.loginform {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  .div1 {
+    display: flex;
+    gap: 8px;
+    align-items: left;
+  }
+
+  .div2 {
+    display: flex;
+    align-items: left;
+  }
+
+  .div3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+
+  .forgetform {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  .f {
+    margin-left: 10%
+  }
