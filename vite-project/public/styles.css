@@ -1,0 +1,57 @@
+
+  .logo-primos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .loginform {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .div1 {
+    margin-top: 0;
+    display: flex;
+    gap: 64px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .div2 {
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    gap: 64px;
+  }
+
+  .div3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+
+  .forgetform {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+
+  .registerform {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+  }
+  
+  .registerButton {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }

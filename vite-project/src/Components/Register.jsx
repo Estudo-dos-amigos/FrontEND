@@ -4,7 +4,7 @@ export function Register() {
 
     return (
         <>
-            <form className="loginform">
+            <form className="registerform">
             <div className="row g-3 align-items-center">
                 <div className="mb-3">
                     <label htmlFor="InputNome" className="form-label">Nome</label>
@@ -42,7 +42,9 @@ export function Register() {
 
             <br />
 
-                <a className="btn btn-success" role="button" aria-disabled="true" href="./index.html" >Concluir</a>
+                <Link className="btn btn-success w-100 h-25" to="/Home" >
+                    Concluir
+                </Link>
 
             <br />
 
