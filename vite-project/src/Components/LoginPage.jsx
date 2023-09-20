@@ -1,14 +1,51 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Header } from "./Header";
+import axios from "axios";
+import { useState } from "react";
+
 
 export function LoginPage() {
+
+  const navigate = useNavigate();
+
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const userData = {
+      email: values.email,
+      password: values.password,
+    }
+
+    axios
+      .post("http://localhost:3000/user/auth/login", userData)
+      .then((res) => {
+        if (res.status === 200) {
+          console.log("Logado com sucesso!!");
+          console.log("Dados da resposta:", res.data);
+          navigate("/Home");
+        } else {
+          console.log("erro na solicitação:", res.status);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <>
       <div className="logo-primos">
         <Header />
       </div>
       <div className="loginform">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="InputEmail1" className="form-label">
               Email
@@ -17,8 +54,10 @@ export function LoginPage() {
               type="email"
               className="form-control"
               id="InputEmail1"
+              name="email"
               aria-describedby="emailHelp"
               placeholder="Digite seu e-mail"
+              onChange={handleChange}
             />
           </div>
           <div className="mb-3">
@@ -29,7 +68,9 @@ export function LoginPage() {
               type="password"
               className="form-control"
               id="InputPassword1"
+              name="password"
               placeholder="Digite a senha"
+              onChange={handleChange}
             />
           </div>
           <br />
@@ -51,7 +92,7 @@ export function LoginPage() {
 
           <br />
           <div className="div1">
-            <Link to="/Home" className="btn btn-primary w-100">
+            <Link className="btn btn-primary w-100" onClick={handleSubmit}>
               Entrar
             </Link>
           </div>
