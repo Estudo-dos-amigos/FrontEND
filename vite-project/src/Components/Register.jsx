@@ -1,57 +1,62 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useState } from "react";
 
 export function Register() {
+  const [values, setValues] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
 
-    const [name, setName] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
+  const navigate = useNavigate();
 
-    const api = axios.create({
-        baseURL: 'http://localhost:3000/',
-    });
 
-  const handleFormEdit = (event, name) => {
-    setFormData({
-      ...formData,
-      [name]: event.target.value,
-    });
+
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
   };
 
-  const handleForm = async () => {
-    try {
-      preventDefault();
-      const response = await api.post (
-        `/user/auth/register`,
-        {
-            name,
-            email,
-            password,
-        }
-      );
-      console.log('Resposta da API:', response.data);
-    } catch (err) {}
-  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const userData = {
+      name: values.name,
+      email: values.email,
+      password: values.password,
+    }
+
+    axios
+  .post("http://localhost:3000/user/auth/register", userData)
+  .then((res) => {
+    if (res.status === 200 || res.status === 201) {
+      console.log("Registro com sucesso!!");
+      console.log("Dados da resposta:", res.data);
+      navigate("/Home");
+    }
+  })
+  .catch((err) => {
+    console.log("Erro na solicitação:", err);
+  });
+
+};
 
   return (
     <>
-      <form className="registerform" onSubmit={handleForm}>
+      <form className="registerform" onSubmit={handleSubmit}>
         <div className="row g-3 align-items-center">
           <div className="mb-3">
             <label htmlFor="InputNome" className="form-label">
               Nome
             </label>
             <input
-                type="text"
-                className="form-control"
-                id="InputName"
-                placeholder="Digite seu nome"
-                required
-                value={name}
-                onChange={(e) => {
-                setName(e.target.value);
-              }}
+              type="text"
+              className="form-control"
+              id="InputName"
+              name="name"
+              placeholder="Digite seu nome"
+              required
+              onChange={handleChange}
             />
           </div>
           <div className="mb-3">
@@ -59,16 +64,13 @@ export function Register() {
               E-mail
             </label>
             <input
-                type="text"
-                className="form-control"
-                id="InputEmail"
-                placeholder="Digite seu e-mail"
-                aria-describedby="E-mailHelpInline"
-                required
-                value={email}
-                onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              type="text"
+              className="form-control"
+              id="InputEmail"
+              name="email"
+              placeholder="Digite seu e-mail"
+              aria-describedby="E-mailHelpInline"
+              onChange={handleChange}
             />
           </div>
           <div className="mb-3">
@@ -92,16 +94,13 @@ export function Register() {
           </div>
           <div>
             <input
-                type="password"
-                id="inputPassword6"
-                className="form-control"
-                aria-describedby="passwordHelpInline"
-                placeholder="Precisa ter de 8-20 caracteres."
-                required
-                value={password}
-                onChange={(e) => {
-                setPassword(e.target.value, "password");
-              }}
+              type="password"
+              id="inputPassword6"
+              className="form-control"
+              name="password"
+              aria-describedby="passwordHelpInline"
+              placeholder="Precisa ter de 8-20 caracteres."
+              onChange={handleChange}
             />
           </div>
           <div className="col-auto">
@@ -111,28 +110,17 @@ export function Register() {
           </div>
           <div>
             <input
-                type="password"
-                id="inputPasswordCadastro"
-                className="form-control"
-                aria-describedby="passwordHelpInline"
-                placeholder="As senhas precisam ser exatamente iguais."
-                required
-                value={password}
-                onChange={(e) => {
-                setPassword(e.target.value, "password");
-              }}
+              type="password"
+              id="inputPasswordCadastro"
+              className="form-control"
+              aria-describedby="passwordHelpInline"
+              placeholder="As senhas precisam ser exatamente iguais."
             />
           </div>
         </div>
 
         <br />
-
-        <Link
-          className="btn btn-success w-100 h-25"
-          to="/Home"
-          type="submit"
-          onChange={handleFormEdit}
-        >
+        <Link className="btn btn-success w-100 h-25" to="/Home" type="submit" onClick={handleSubmit}>
           Concluir
         </Link>
 
